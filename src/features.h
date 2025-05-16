@@ -2,14 +2,14 @@
 #define FEATURES_H
 
 
-void dimension(char *source_path);
+void dimension(char *adresse);
 unsigned char *read_image_data=NULL;
 int largeur=0,hauteur=0,c=0;
 
-if(read_image_data(source_path,&w,&h,&c)){
+if (read_image_data(adresse,&w,&h,&c)){
     printf("dimension: %d, %d",w,h);
     else{
-        fprintf(stderr,"nique ta photo ya une erreur sorry brother",source_path);
+        fprintf(stderr,"nique ta photo ya une erreur sorry brother",adresse);
     }
 }
 if (data!=NULL){

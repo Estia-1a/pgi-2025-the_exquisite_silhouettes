@@ -12,6 +12,6 @@
  */
 
 
-void dimension(char *source_path) {
+void dimension(char *adresse) {
     
 }
