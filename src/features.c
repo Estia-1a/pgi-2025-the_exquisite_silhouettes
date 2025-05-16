@@ -11,6 +11,7 @@
  * When the feature is totally implemented, your commit message must contain "close #n".
  */
 
-void helloWorld() {
-    printf("Hello World !");
+
+void dimension(char *source_path) {
+    
 }
