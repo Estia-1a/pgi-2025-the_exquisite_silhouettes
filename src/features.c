@@ -12,17 +12,20 @@
  */
 
 
- void dimension(char *adresse);
- unsigned char *read_image_data=NULL;
- int largeur=0,hauteur=0,c=0;
- 
- if (read_image_data(adresse,&w,&h,&c)){
-     printf("dimension: %d, %d",w,h);
-     else{
-         fprintf(stderr,"nique ta photo ya une erreur sorry brother",adresse);
-     }
- }
- if (data!=NULL){
-     free(data);
+ void helloWorld() {
+    printf("Hello World !");
+}
+
+ void dimension(const char *fichier) {
+    unsigned char* data = NULL;
+    int w = 0, h = 0, c = 0;
+    if (read_image_data(fichier, &data, &w, &h, &c) != 0) {
+        printf("la dimension de l'image: %s est %d %d\n", fichier, w, h);
+        free_image_data(data);
+    } else {
+        printf("Fail to open %s\n", fichier);
+    }
+
+
  }
  
