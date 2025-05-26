@@ -23,4 +23,6 @@ void color_green(char *filename);
 
 void color_blue(char *filename);
 
+void color_grey(char *filename);
+
 #endif

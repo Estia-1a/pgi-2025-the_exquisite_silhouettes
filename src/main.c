@@ -87,6 +87,12 @@ int main(int argc, char **argv)
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     color_blue(configuration.filenames[0]);
   }
+
+  else if (strcmp(configuration.command, "color_grey") == 0)
+  {
+    /* helloworld() function is defined in feature.h and implemented in feature.c */
+    color_grey(configuration.filenames[0]);
+  }
   /*
    * TO COMPLETE
    */
