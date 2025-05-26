@@ -187,7 +187,7 @@ void min_pixel(char *filename)
         return;
     }
 
-    int min_sum = 255 * 3 + 1; // somme max possible +1
+    int min_sum = 255 * 3 + 1; 
     int min_x = 0, min_y = 0;
     unsigned int min_R = 0, min_V = 0, min_B = 0;
 
