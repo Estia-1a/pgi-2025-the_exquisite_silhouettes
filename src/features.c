@@ -57,10 +57,7 @@ void first_pixel(char *fichier)
         fprintf(stderr, "je ne peux pas lire ton image %s", fichier);
     }
 
-    if (data != NULL)
-    {
-        free(data);
-    }
+    
 }
 
 void tenth_pixel(char *fichier)
