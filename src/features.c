@@ -76,7 +76,7 @@ void tenth_pixel(char *fichier)
             unsigned char g = data[28];
             unsigned char b = data[29];
 
-            printf("la valeur de r est:%d le g est: %d et le b est: %d", r, g, b);
+            printf("tenth_pixel: %d, %d, %d", r, g, b);
         }
     }
     else
