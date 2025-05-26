@@ -23,7 +23,7 @@ void dimension(const char *fichier)
     int w = 0, h = 0, c = 0;
     if (read_image_data(fichier, &data, &w, &h, &c) != 0)
     {
-        printf("la dimension de l'image: %s est %d %d\n", fichier, w, h);
+        printf("dimension: %d, %d\n", w, h);
         free_image_data(data);
     }
     else
@@ -56,8 +56,6 @@ void first_pixel(char *fichier)
     {
         fprintf(stderr, "je ne peux pas lire ton image %s", fichier);
     }
-
-    
 }
 
 void tenth_pixel(char *fichier)
@@ -89,5 +87,27 @@ void tenth_pixel(char *fichier)
     if (data != NULL)
     {
         free(data);
+    }
+}
+
+void print_pixel(char *filename, int x, int y)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    pixelRGB *pixel = get_pixel(data, width, height, n, x, y);
+    if (pixel == NULL)
+    {
+        fprintf(stderr, "Coordonnées (%d, %d) hors limites\n", x, y);
+    }
+    else
+    {
+        printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, pixel->R, pixel->V, pixel->B);
     }
 }
