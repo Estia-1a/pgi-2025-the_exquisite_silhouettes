@@ -9,9 +9,8 @@ void first_pixel(char *);
 
 void tenth_pixel(char *);
 
+void second_line(char *filename, int x, int y);
+
 void print_pixel(char *filename, int x, int y);
 
 #endif
-
-
-

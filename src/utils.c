@@ -14,7 +14,7 @@ pixelRGB *get_pixel(unsigned char *data, const unsigned int width, const unsigne
         return NULL;
     }
     unsigned int index = (y * width + x) * n;
-    static pixelRGB pixel; 
+    static pixelRGB pixel;
     pixel.R = data[index];
     pixel.V = data[index + 1];
     pixel.B = data[index + 2];

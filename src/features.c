@@ -90,6 +90,28 @@ void tenth_pixel(char *fichier)
     }
 }
 
+void second_line(char *filename, int x, int y)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    pixelRGB *pixel = get_pixel(data, width, height, n, x, y);
+    if (pixel == NULL)
+    {
+        fprintf(stderr, "Coordonnées (%d, %d) hors limites\n", x, y);
+    }
+    else
+    {
+        printf("second_line: %d, %d, %d\n", pixel->R, pixel->V, pixel->B);
+    }
+}
+
 void print_pixel(char *filename, int x, int y)
 {
     unsigned char *data = NULL;
