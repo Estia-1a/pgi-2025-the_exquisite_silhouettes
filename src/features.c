@@ -49,7 +49,7 @@ void first_pixel(char *fichier)
             unsigned char g = data[1];
             unsigned char b = data[2];
 
-            printf("la valeur de r est:%d le g est: %d et le b est: %d", r, g, b);
+            printf("first_pixel: %d, %d, %d", r, g, b);
         }
     }
     else
