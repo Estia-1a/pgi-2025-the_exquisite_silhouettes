@@ -59,7 +59,11 @@ int main(int argc, char **argv)
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     print_pixel(configuration.filenames[0], 45, 500);
   }
-
+  else if (strncmp(configuration.command, "max_pixel", 3) == 0)
+  {
+    /* helloworld() function is defined in feature.h and implemented in feature.c */
+    max_pixel(configuration.filenames[0]);
+  }
   /*
    * TO COMPLETE
    */

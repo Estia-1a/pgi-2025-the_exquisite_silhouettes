@@ -13,4 +13,6 @@ void second_line(char *filename, int x, int y);
 
 void print_pixel(char *filename, int x, int y);
 
+void max_pixel(char *filename);
+
 #endif

@@ -133,3 +133,45 @@ void print_pixel(char *filename, int x, int y)
         printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, pixel->R, pixel->V, pixel->B);
     }
 }
+
+
+void max_pixel(char *filename)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    int max_sum = -1;
+    int max_x = 0, max_y = 0;
+    unsigned int max_R = 0, max_V = 0, max_B = 0;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            pixelRGB *pixel = get_pixel(data, width, height, n, x, y);
+            if (pixel != NULL)
+            {
+                int sum = pixel->R + pixel->V + pixel->B;
+                if (sum > max_sum)
+                {
+                    max_sum = sum;
+                    max_x = x;
+                    max_y = y;
+                    max_R = pixel->R;
+                    max_V = pixel->V;
+                    max_B = pixel->B;
+                }
+            }
+        }
+    }
+
+    printf("max_pixel (%d, %d): %u, %u, %u\n", max_x, max_y, max_R, max_V, max_B);
+
+   
+}
