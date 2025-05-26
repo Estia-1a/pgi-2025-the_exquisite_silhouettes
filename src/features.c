@@ -214,3 +214,31 @@ void min_pixel(char *filename)
 
     printf("min_pixel (%d, %d): %u, %u, %u\n", min_x, min_y, min_R, min_V, min_B);
 }
+
+void color_red(char *filename)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    int size = width * height * n;
+
+    for (int i = 0; i < size; i += n)
+    {
+        
+        unsigned char r = data[i];
+        data[i] = r;     
+        data[i + 1] = 0; 
+        data[i + 2] = 0; 
+    }
+
+    if (!write_image_data("image_out.bmp", data, width, height))
+    {
+        fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
+    }
+}

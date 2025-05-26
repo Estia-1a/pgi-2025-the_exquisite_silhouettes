@@ -17,4 +17,6 @@ void max_pixel(char *filename);
 
 void min_pixel(char *filename);
 
+void color_red(char *filename);
+
 #endif
