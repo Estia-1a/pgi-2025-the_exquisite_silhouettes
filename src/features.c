@@ -175,3 +175,42 @@ void max_pixel(char *filename)
 
    
 }
+
+void min_pixel(char *filename)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    int min_sum = 255 * 3 + 1; // somme max possible +1
+    int min_x = 0, min_y = 0;
+    unsigned int min_R = 0, min_V = 0, min_B = 0;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            pixelRGB *pixel = get_pixel(data, width, height, n, x, y);
+            if (pixel != NULL)
+            {
+                int sum = pixel->R + pixel->V + pixel->B;
+                if (sum < min_sum)
+                {
+                    min_sum = sum;
+                    min_x = x;
+                    min_y = y;
+                    min_R = pixel->R;
+                    min_V = pixel->V;
+                    min_B = pixel->B;
+                }
+            }
+        }
+    }
+
+    printf("min_pixel (%d, %d): %u, %u, %u\n", min_x, min_y, min_R, min_V, min_B);
+}
