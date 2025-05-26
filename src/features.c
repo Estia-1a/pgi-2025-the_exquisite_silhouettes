@@ -134,7 +134,6 @@ void print_pixel(char *filename, int x, int y)
     }
 }
 
-
 void max_pixel(char *filename)
 {
     unsigned char *data = NULL;
@@ -172,8 +171,6 @@ void max_pixel(char *filename)
     }
 
     printf("max_pixel (%d, %d): %u, %u, %u\n", max_x, max_y, max_R, max_V, max_B);
-
-   
 }
 
 void min_pixel(char *filename)
@@ -187,7 +184,7 @@ void min_pixel(char *filename)
         return;
     }
 
-    int min_sum = 255 * 3 + 1; 
+    int min_sum = 255 * 3 + 1;
     int min_x = 0, min_y = 0;
     unsigned int min_R = 0, min_V = 0, min_B = 0;
 
@@ -230,11 +227,11 @@ void color_red(char *filename)
 
     for (int i = 0; i < size; i += n)
     {
-        
+
         unsigned char r = data[i];
-        data[i] = r;     
-        data[i + 1] = 0; 
-        data[i + 2] = 0; 
+        data[i] = r;
+        data[i + 1] = 0;
+        data[i + 2] = 0;
     }
 
     if (!write_image_data("image_out.bmp", data, width, height))
@@ -242,3 +239,31 @@ void color_red(char *filename)
         fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
     }
 }
+
+void color_green(char *filename)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    int size = width * height * n;
+
+    for (int i = 0; i < size; i += n)
+    {
+
+        unsigned char v = data[i + 1];
+        data[i] = 0;
+        data[i + 1] = v;
+        data[i + 2] = 0;
+    }
+    if (!write_image_data("image_out.bmp", data, width, height))
+    {
+        fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
+    }
+}
+

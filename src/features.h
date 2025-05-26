@@ -19,4 +19,7 @@ void min_pixel(char *filename);
 
 void color_red(char *filename);
 
+void color_green(char *filename);
+
+
 #endif
