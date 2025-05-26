@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -47,6 +48,38 @@ void first_pixel(char *fichier)
             unsigned char r = data[0];
             unsigned char g = data[1];
             unsigned char b = data[2];
+
+            printf("la valeur de r est:%d le g est: %d et le b est: %d", r, g, b);
+        }
+    }
+    else
+    {
+        fprintf(stderr, "je ne peux pas lire ton image %s", fichier);
+    }
+
+    if (data != NULL)
+    {
+        free(data);
+    }
+}
+
+void tenth_pixel(char *fichier)
+{
+
+    unsigned char *data = NULL;
+    int hauteur = 0, largeur = 0, c = 0;
+
+    if (read_image_data(fichier, &data, &hauteur, &largeur, &c))
+    {
+        if (c < 3)
+        {
+            printf("ton image ne contient pas assez de channel");
+        }
+        else
+        {
+            unsigned char r = data[27];
+            unsigned char g = data[28];
+            unsigned char b = data[29];
 
             printf("la valeur de r est:%d le g est: %d et le b est: %d", r, g, b);
         }
