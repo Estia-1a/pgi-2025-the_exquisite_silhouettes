@@ -240,6 +240,35 @@ void color_red(char *filename)
     }
 }
 
+void color_blue(char *filename)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    int size = width * height * n;
+
+    for (int i = 0; i < size; i += n)
+    {
+        unsigned char b = data[i + 2]; 
+
+        data[i]     = 0;  
+        data[i + 1] = 0;  
+        data[i + 2] = b; 
+    }
+
+    if (!write_image_data("image_out.bmp", data, width, height))
+    {
+        fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
+    }
+}
+
+
 void color_green(char *filename)
 {
     unsigned char *data = NULL;
@@ -255,15 +284,15 @@ void color_green(char *filename)
 
     for (int i = 0; i < size; i += n)
     {
+        unsigned char v = data[i + 1]; 
 
-        unsigned char v = data[i + 1];
-        data[i] = 0;
-        data[i + 1] = v;
-        data[i + 2] = 0;
+        data[i]     = 0;  
+        data[i + 1] = v;  
+        data[i + 2] = 0; 
     }
+
     if (!write_image_data("image_out.bmp", data, width, height))
     {
         fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
     }
 }
-
