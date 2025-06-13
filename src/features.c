@@ -355,3 +355,43 @@ int inverser(const char *fichier1, const char *fichier2)
     free(data);
     return 1;
 }
+
+int color_gray_luminance(const char *fichier1, const char *fichier2)
+{
+    unsigned char *data = NULL;
+    int width, height, channel_count;
+
+    if (!read_image_data(fichier1, &data, &width, &height, &channel_count))
+    {
+        fprintf(stderr, "Erreur lors de la lecture de l'image : %s\n", fichier1);
+        return 0;
+    }
+
+    int pixel_count = width * height;
+
+   
+    for (int i = 0; i < pixel_count; ++i)
+    {
+        unsigned char r = data[i * 3];
+        unsigned char v = data[i * 3 + 1];
+        unsigned char b = data[i * 3 + 2];
+
+        unsigned char gray = (unsigned char)(0.21 * r + 0.72 * v + 0.07 * b);
+
+        data[i * 3] = gray;
+        data[i * 3 + 1] = gray;
+        data[i * 3 + 2] = gray;
+    }
+
+    
+    if (!write_image_data(fichier2, data, width, height))
+    {
+        fprintf(stderr, "Erreur lors de l'écriture de l'image : %s\n", fichier2);
+        free(data);
+        return 0;
+    }
+
+    free(data);
+    return 1;
+}
+
