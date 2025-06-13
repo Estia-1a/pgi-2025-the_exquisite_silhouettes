@@ -32,4 +32,7 @@ int color_gray_luminance(const char *fichier1, const char *fichier2);
 int color_desaturate(const char *fichier1, const char *fichier2);
 
 int scale_bilinear(const char *input_file, const char *output_file, float scale);
+
+int rotate_cw(const char *input_filename, const char *output_filename);
+
 #endif
