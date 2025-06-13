@@ -117,6 +117,7 @@ int main(int argc, char **argv)
 
   else if (strcmp(configuration.command, "scale_bilinear") == 0)
   {
+    
 
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     double scale = atof(configuration.arguments[0]);
