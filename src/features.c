@@ -452,7 +452,7 @@ unsigned char bilinear_interpolate(float x, float y, unsigned char q11, unsigned
 
 int scale_bilinear(const char *input_file, const char *output_file, float scale)
 {
-    unsigned char *data_in;
+    unsigned char *data_in = NULL;
     int width_in, height_in, channel_count;
 
     if (!read_image_data(input_file, &data_in, &width_in, &height_in, &channel_count))
@@ -464,7 +464,13 @@ int scale_bilinear(const char *input_file, const char *output_file, float scale)
     int width_out = (int)(width_in * scale);
     int height_out = (int)(height_in * scale);
 
-    unsigned char data_out[width_out * height_out * channel_count];
+    unsigned char *data_out = malloc(width_out * height_out * channel_count);
+    if (!data_out)
+    {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data_in);
+        return 0;
+    }
 
     for (int y_out = 0; y_out < height_out; y_out++)
     {
@@ -497,10 +503,12 @@ int scale_bilinear(const char *input_file, const char *output_file, float scale)
     {
         printf("Erreur lors de l'écriture de l'image.\n");
         free(data_in);
+        free(data_out);
         return 0;
     }
 
     free(data_in);
+    free(data_out);
     return 1;
 }
 
