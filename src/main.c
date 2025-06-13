@@ -88,10 +88,10 @@ int main(int argc, char **argv)
     color_blue(configuration.filenames[0]);
   }
 
-  else if (strcmp(configuration.command, "color_grey") == 0)
+  else if (strcmp(configuration.command, "color_gray") == 0)
   {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
-    color_grey(configuration.filenames[0]);
+    color_gray(configuration.filenames[0]);
   }
 
   else if (strcmp(configuration.command, "inverser") == 0)

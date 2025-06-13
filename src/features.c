@@ -296,7 +296,7 @@ void color_green(char *filename)
     }
 }
 
-void color_grey(char *filename)
+void color_gray(char *filename)
 {
     unsigned char *data = NULL;
     int width = 0, height = 0, n = 0;
@@ -315,11 +315,11 @@ void color_grey(char *filename)
         unsigned char v = data[i + 1];
         unsigned char b = data[i + 2];
 
-        unsigned char grey = (unsigned char)(0.299 * r + 0.587 * v + 0.114 * b);
+        unsigned char gray = (unsigned char)(0.299 * r + 0.587 * v + 0.114 * b);
 
-        data[i] = grey;
-        data[i + 1] = grey;
-        data[i + 2] = grey;
+        data[i] = gray;
+        data[i + 1] = gray;
+        data[i + 2] = gray;
     }
 
     if (!write_image_data("image_out.bmp", data, width, height))
