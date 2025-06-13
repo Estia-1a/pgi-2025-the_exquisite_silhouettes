@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
   else if (strcmp(configuration.command, "inverser") == 0)
   {
-    
+
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     inverser(configuration.filenames[0], "image_out.bmp");
   }
@@ -113,6 +113,14 @@ int main(int argc, char **argv)
 
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     color_desaturate(configuration.filenames[0], "image_out.bmp");
+  }
+
+  else if (strcmp(configuration.command, "scale_bilinear") == 0)
+  {
+
+    /* helloworld() function is defined in feature.h and implemented in feature.c */
+    double scale = atof(configuration.arguments[0]);
+    scale_bilinear(configuration.filenames[0], "image_out.bmp", scale);
   }
   /*
    * TO COMPLETE

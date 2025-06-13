@@ -434,3 +434,71 @@ int color_desaturate(const char *fichier_in, const char *fichier_out)
     free(data);
     return 1;
 }
+
+unsigned char bilinear_interpolate(float x, float y, unsigned char q11, unsigned char q21, unsigned char q12, unsigned char q22)
+{
+    float x2x = x - floorf(x);
+    float y2y = y - floorf(y);
+
+    float val = q11 * (1 - x2x) * (1 - y2y) +
+                q21 * x2x * (1 - y2y) +
+                q12 * (1 - x2x) * y2y +
+                q22 * x2x * y2y;
+
+    return (unsigned char)val;
+}
+
+int scale_bilinear(const char *input_file, const char *output_file, float scale)
+{
+    unsigned char *data_in;
+    int width_in, height_in, channel_count;
+
+    if (!read_image_data(input_file, &data_in, &width_in, &height_in, &channel_count))
+    {
+        printf("Erreur lors de la lecture de l'image.\n");
+        return 0;
+    }
+
+    int width_out = (int)(width_in * scale);
+    int height_out = (int)(height_in * scale);
+
+    
+    unsigned char data_out[width_out * height_out * channel_count];
+
+    for (int y_out = 0; y_out < height_out; y_out++)
+    {
+        float y_in = y_out / scale;
+        int y0 = (int)y_in;
+        int y1 = (y0 + 1 < height_in) ? y0 + 1 : y0;
+        float dy = y_in - y0;
+
+        for (int x_out = 0; x_out < width_out; x_out++)
+        {
+            float x_in = x_out / scale;
+            int x0 = (int)x_in;
+            int x1 = (x0 + 1 < width_in) ? x0 + 1 : x0;
+            float dx = x_in - x0;
+
+            for (int c = 0; c < channel_count; c++)
+            {
+                unsigned char q11 = data_in[(y0 * width_in + x0) * channel_count + c];
+                unsigned char q21 = data_in[(y0 * width_in + x1) * channel_count + c];
+                unsigned char q12 = data_in[(y1 * width_in + x0) * channel_count + c];
+                unsigned char q22 = data_in[(y1 * width_in + x1) * channel_count + c];
+
+                data_out[(y_out * width_out + x_out) * channel_count + c] =
+                    bilinear_interpolate(dx, dy, q11, q21, q12, q22);
+            }
+        }
+    }
+
+    if (!write_image_data(output_file, data_out, width_out, height_out))
+    {
+        printf("Erreur lors de l'écriture de l'image.\n");
+        free(data_in);
+        return 0;
+    }
+
+    free(data_in);
+    return 1;
+}
