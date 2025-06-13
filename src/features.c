@@ -395,14 +395,14 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
     return 1;
 }
 
-int color_desaturate(const char *fichier_in, const char *fichier_out)
+int color_desaturate(const char *fichier1, const char *fichier2)
 {
     unsigned char *data;
     int width, height, channel_count;
 
-    if (!read_image_data(fichier_in, &data, &width, &height, &channel_count))
+    if (!read_image_data(fichier1, &data, &width, &height, &channel_count))
     {
-        printf("Erreur : impossible de lire %s\n", fichier_in);
+        printf("Erreur : impossible de lire %s\n", fichier1);
         return 0;
     }
 
@@ -424,9 +424,9 @@ int color_desaturate(const char *fichier_in, const char *fichier_out)
         data[i * channel_count + 2] = new_val;
     }
 
-    if (!write_image_data(fichier_out, data, width, height))
+    if (!write_image_data(fichier2, data, width, height))
     {
-        printf("Erreur : impossible d'écrire %s\n", fichier_out);
+        printf("Erreur : impossible d'écrire %s\n", fichier2);
         free(data);
         return 0;
     }
@@ -437,15 +437,17 @@ int color_desaturate(const char *fichier_in, const char *fichier_out)
 
 unsigned char bilinear_interpolate(float x, float y, unsigned char q11, unsigned char q21, unsigned char q12, unsigned char q22)
 {
-    float x2x = x - floorf(x);
-    float y2y = y - floorf(y);
+    float val = q11 * (1 - x) * (1 - y) +
+                q21 * x * (1 - y) +
+                q12 * (1 - x) * y +
+                q22 * x * y;
 
-    float val = q11 * (1 - x2x) * (1 - y2y) +
-                q21 * x2x * (1 - y2y) +
-                q12 * (1 - x2x) * y2y +
-                q22 * x2x * y2y;
+    if (val < 0)
+        val = 0;
+    if (val > 255)
+        val = 255;
 
-    return (unsigned char)val;
+    return (unsigned char)(val + 0.5f); 
 }
 
 int scale_bilinear(const char *input_file, const char *output_file, float scale)
