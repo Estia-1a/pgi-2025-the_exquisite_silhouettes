@@ -582,3 +582,59 @@ int rotate_cw(const char *input_filename, const char *output_filename)
 
     return 1;
 }
+
+int scale_crop(const char *input_file, const char *output_file, int center_x, int center_y, int crop_width, int crop_height)
+{
+    unsigned char *data_in = NULL;
+    int width_in, height_in, channel_count;
+
+    if (!read_image_data(input_file, &data_in, &width_in, &height_in, &channel_count))
+    {
+        printf("Erreur lors de la lecture de l'image.\n");
+        return 0;
+    }
+
+    unsigned char *data_out = malloc(crop_width * crop_height * channel_count);
+    if (!data_out)
+    {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data_in);
+        return 0;
+    }
+
+    int x_start = center_x - crop_width / 2;
+    int y_start = center_y - crop_height / 2;
+
+    for (int y = 0; y < crop_height; y++)
+    {
+        for (int x = 0; x < crop_width; x++)
+        {
+            int src_x = x_start + x;
+            int src_y = y_start + y;
+
+            for (int c = 0; c < channel_count; c++)
+            {
+                if (src_x >= 0 && src_x < width_in && src_y >= 0 && src_y < height_in)
+                {
+                    data_out[(y * crop_width + x) * channel_count + c] = data_in[(src_y * width_in + src_x) * channel_count + c];
+                }
+                else
+                {
+                    data_out[(y * crop_width + x) * channel_count + c] = 0; // noir si hors image
+                }
+            }
+        }
+    }
+
+    if (!write_image_data(output_file, data_out, crop_width, crop_height))
+    {
+        printf("Erreur lors de l'écriture de l'image.\n");
+        free(data_in);
+        free(data_out);
+        return 0;
+    }
+
+    free(data_in);
+    free(data_out);
+    return 1;
+}

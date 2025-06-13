@@ -35,4 +35,5 @@ int scale_bilinear(const char *input_file, const char *output_file, float scale)
 
 int rotate_cw(const char *input_filename, const char *output_filename);
 
+int scale_crop(const char *input_file, const char *output_file, int center_x, int center_y, int crop_width, int crop_height);
 #endif
