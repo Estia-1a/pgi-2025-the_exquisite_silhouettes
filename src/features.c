@@ -132,6 +132,8 @@ void print_pixel(char *filename, int x, int y)
     {
         printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, pixel->R, pixel->V, pixel->B);
     }
+
+    free(data);
 }
 
 void max_pixel(char *filename)
@@ -369,7 +371,6 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
 
     int pixel_count = width * height;
 
-   
     for (int i = 0; i < pixel_count; ++i)
     {
         unsigned char r = data[i * 3];
@@ -383,7 +384,6 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
         data[i * 3 + 2] = gray;
     }
 
-    
     if (!write_image_data(fichier2, data, width, height))
     {
         fprintf(stderr, "Erreur lors de l'écriture de l'image : %s\n", fichier2);
@@ -400,7 +400,6 @@ int color_desaturate(const char *fichier_in, const char *fichier_out)
     unsigned char *data;
     int width, height, channel_count;
 
-   
     if (!read_image_data(fichier_in, &data, &width, &height, &channel_count))
     {
         printf("Erreur : impossible de lire %s\n", fichier_in);
@@ -423,7 +422,6 @@ int color_desaturate(const char *fichier_in, const char *fichier_out)
         data[i * channel_count + 0] = new_val;
         data[i * channel_count + 1] = new_val;
         data[i * channel_count + 2] = new_val;
-      
     }
 
     if (!write_image_data(fichier_out, data, width, height))
