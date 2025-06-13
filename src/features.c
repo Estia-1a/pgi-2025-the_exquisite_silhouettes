@@ -395,3 +395,44 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
     return 1;
 }
 
+int color_desaturate(const char *fichier_in, const char *fichier_out)
+{
+    unsigned char *data;
+    int width, height, channel_count;
+
+   
+    if (!read_image_data(fichier_in, &data, &width, &height, &channel_count))
+    {
+        printf("Erreur : impossible de lire %s\n", fichier_in);
+        return 0;
+    }
+
+    int size = width * height;
+
+    for (int i = 0; i < size; i++)
+    {
+        unsigned char R = data[i * channel_count + 0];
+        unsigned char V = data[i * channel_count + 1];
+        unsigned char B = data[i * channel_count + 2];
+
+        unsigned char min_val = (R < V) ? ((R < B) ? R : B) : ((V < B) ? V : B);
+        unsigned char max_val = (R > V) ? ((R > B) ? R : B) : ((V > B) ? V : B);
+
+        unsigned char new_val = (min_val + max_val) / 2;
+
+        data[i * channel_count + 0] = new_val;
+        data[i * channel_count + 1] = new_val;
+        data[i * channel_count + 2] = new_val;
+      
+    }
+
+    if (!write_image_data(fichier_out, data, width, height))
+    {
+        printf("Erreur : impossible d'écrire %s\n", fichier_out);
+        free(data);
+        return 0;
+    }
+
+    free(data);
+    return 1;
+}

@@ -28,4 +28,7 @@ void color_grey(char *filename);
 int inverser(const char *fichier1, const char *fichier2);
 
 int color_gray_luminance(const char *fichier_in, const char *fichier_out);
+
+int color_desaturate(const char *fichier_in, const char *fichier_out);
+
 #endif

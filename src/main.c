@@ -108,6 +108,12 @@ int main(int argc, char **argv)
     color_gray_luminance(configuration.filenames[0], "image_out.bmp");
   }
 
+  else if (strcmp(configuration.command, "color_desaturate") == 0)
+  {
+
+    /* helloworld() function is defined in feature.h and implemented in feature.c */
+    color_desaturate(configuration.filenames[0], "image_out.bmp");
+  }
   /*
    * TO COMPLETE
    */
