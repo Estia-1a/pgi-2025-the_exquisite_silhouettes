@@ -80,7 +80,7 @@ int main(int argc, char **argv)
   else if (strcmp(configuration.command, "color_green") == 0)
   {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
-        color_green(configuration.filenames[0]);
+    color_green(configuration.filenames[0]);
   }
   else if (strcmp(configuration.command, "color_blue") == 0)
   {
@@ -93,6 +93,15 @@ int main(int argc, char **argv)
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     color_grey(configuration.filenames[0]);
   }
+
+  else if (strcmp(configuration.command, "inverser") == 0)
+  {
+    
+    /* helloworld() function is defined in feature.h and implemented in feature.c */
+    inverser(configuration.filenames[0], "image_out.bmp");
+  }
+
+  
   /*
    * TO COMPLETE
    */

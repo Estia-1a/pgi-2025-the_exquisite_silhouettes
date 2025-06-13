@@ -255,11 +255,11 @@ void color_blue(char *filename)
 
     for (int i = 0; i < size; i += n)
     {
-        unsigned char b = data[i + 2]; 
+        unsigned char b = data[i + 2];
 
-        data[i]     = 0;  
-        data[i + 1] = 0;  
-        data[i + 2] = b; 
+        data[i] = 0;
+        data[i + 1] = 0;
+        data[i + 2] = b;
     }
 
     if (!write_image_data("image_out.bmp", data, width, height))
@@ -267,7 +267,6 @@ void color_blue(char *filename)
         fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
     }
 }
-
 
 void color_green(char *filename)
 {
@@ -284,11 +283,11 @@ void color_green(char *filename)
 
     for (int i = 0; i < size; i += n)
     {
-        unsigned char v = data[i + 1]; 
+        unsigned char v = data[i + 1];
 
-        data[i]     = 0;  
-        data[i + 1] = v;  
-        data[i + 2] = 0; 
+        data[i] = 0;
+        data[i + 1] = v;
+        data[i + 2] = 0;
     }
 
     if (!write_image_data("image_out.bmp", data, width, height))
@@ -327,4 +326,32 @@ void color_grey(char *filename)
     {
         fprintf(stderr, "Erreur lors de l'écriture de l'image de sortie.\n");
     }
+}
+
+int inverser(const char *fichier1, const char *fichier2)
+{
+    unsigned char *data = NULL;
+    int width, height, channel_count;
+
+    if (!read_image_data(fichier1, &data, &width, &height, &channel_count))
+    {
+        fprintf(stderr, "Erreur : Impossible de lire l'image %s\n", fichier1);
+        return 0;
+    }
+
+    int taille = width * height * channel_count;
+    for (int i = 0; i < taille; i++)
+    {
+        data[i] = 255 - data[i];
+    }
+
+    if (!write_image_data(fichier2, data, width, height))
+    {
+        fprintf(stderr, "Erreur : Impossible d'écrire l'image %s\n", fichier2);
+        free(data);
+        return 0;
+    }
+
+    free(data);
+    return 1;
 }

@@ -25,4 +25,6 @@ void color_blue(char *filename);
 
 void color_grey(char *filename);
 
+int inverser(const char *fichier1, const char *fichier2);
+
 #endif
