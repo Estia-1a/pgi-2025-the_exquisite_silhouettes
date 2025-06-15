@@ -43,4 +43,6 @@ void max_component(char *filename, char component);
 
 int rotate_acw(const char *input_filename, const char *output_filename);
 
+int mirror_horizontal(const char *input_filename, const char *output_filename);
+
 #endif

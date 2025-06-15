@@ -661,7 +661,6 @@ void min_component(char *filename, char component)
     int min_x = 0, min_y = 0;
     int channel_offset;
 
-  
     switch (component)
     {
     case 'R':
@@ -682,7 +681,6 @@ void min_component(char *filename, char component)
         return;
     }
 
-  
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -698,7 +696,6 @@ void min_component(char *filename, char component)
             }
         }
     }
-
 
     printf("min_component %c (%d, %d): %d\n",
            (component >= 'a' && component <= 'z') ? component - 32 : component,
@@ -729,7 +726,6 @@ void max_component(char *filename, char component)
     int max_x = 0, max_y = 0;
     int channel_offset;
 
-
     switch (component)
     {
     case 'R':
@@ -750,7 +746,6 @@ void max_component(char *filename, char component)
         return;
     }
 
- 
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -767,7 +762,6 @@ void max_component(char *filename, char component)
         }
     }
 
-  
     printf("max_component %c (%d, %d): %d\n",
            (component >= 'a' && component <= 'z') ? component - 32 : component,
            max_x, max_y, max_value);
@@ -843,6 +837,77 @@ int rotate_acw(const char *input_filename, const char *output_filename)
 
     printf("Image tournée de 90° anti-horaire sauvegardée : %s (%dx%d -> %dx%d)\n",
            output_filename, width, height, new_width, new_height);
+
+    return 1;
+}
+
+// Dans features.c
+int mirror_horizontal(const char *input_filename, const char *output_filename)
+{
+    unsigned char *input_data = NULL;
+    unsigned char *output_data = NULL;
+    int width, height, channels;
+    int x, y, input_idx, output_idx;
+    int mirrored_x;
+
+    if (!read_image_data(input_filename, &input_data, &width, &height, &channels))
+    {
+        fprintf(stderr, "Erreur : Impossible de lire l'image %s\n", input_filename);
+        return 0;
+    }
+
+    if (channels < 3)
+    {
+        fprintf(stderr, "Erreur : L'image doit avoir au moins 3 canaux\n");
+        free(input_data);
+        return 0;
+    }
+
+    // Les dimensions restent les mêmes pour un miroir horizontal
+    output_data = (unsigned char *)malloc(width * height * channels);
+    if (output_data == NULL)
+    {
+        fprintf(stderr, "Erreur : Allocation mémoire échouée\n");
+        free(input_data);
+        return 0;
+    }
+
+    for (y = 0; y < height; y++)
+    {
+        for (x = 0; x < width; x++)
+        {
+            input_idx = (y * width + x) * channels;
+
+            // Transformation pour miroir horizontal
+            // Le pixel de gauche va à droite et vice versa
+            mirrored_x = width - 1 - x;
+
+            output_idx = (y * width + mirrored_x) * channels;
+
+            output_data[output_idx] = input_data[input_idx];
+            output_data[output_idx + 1] = input_data[input_idx + 1];
+            output_data[output_idx + 2] = input_data[input_idx + 2];
+
+            if (channels >= 4)
+            {
+                output_data[output_idx + 3] = input_data[input_idx + 3];
+            }
+        }
+    }
+
+    if (!write_image_data(output_filename, output_data, width, height))
+    {
+        fprintf(stderr, "Erreur : Impossible d'écrire l'image %s\n", output_filename);
+        free(input_data);
+        free(output_data);
+        return 0;
+    }
+
+    free(input_data);
+    free(output_data);
+
+    printf("Image miroir horizontal sauvegardée : %s (%dx%d)\n",
+           output_filename, width, height);
 
     return 1;
 }
