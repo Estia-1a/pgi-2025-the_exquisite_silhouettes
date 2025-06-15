@@ -661,15 +661,15 @@ void min_component(char *filename, char component)
     int min_x = 0, min_y = 0;
     int channel_offset;
 
-    /* Déterminer quel canal analyser */
+  
     switch (component)
     {
     case 'R':
     case 'r':
         channel_offset = 0;
         break;
-    case 'G':
-    case 'g':
+    case 'V':
+    case 'v':
         channel_offset = 1;
         break;
     case 'B':
@@ -682,7 +682,7 @@ void min_component(char *filename, char component)
         return;
     }
 
-    /* Parcourir tous les pixels */
+  
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -699,7 +699,7 @@ void min_component(char *filename, char component)
         }
     }
 
-    /* Afficher le résultat selon le format demandé */
+
     printf("min_component %c (%d, %d): %d\n",
            (component >= 'a' && component <= 'z') ? component - 32 : component,
            min_x, min_y, min_value);
@@ -729,15 +729,15 @@ void max_component(char *filename, char component)
     int max_x = 0, max_y = 0;
     int channel_offset;
 
-    /* Déterminer quel canal analyser */
+
     switch (component)
     {
     case 'R':
     case 'r':
         channel_offset = 0;
         break;
-    case 'G':
-    case 'g':
+    case 'V':
+    case 'v':
         channel_offset = 1;
         break;
     case 'B':
@@ -745,12 +745,12 @@ void max_component(char *filename, char component)
         channel_offset = 2;
         break;
     default:
-        fprintf(stderr, "Composant invalide. Utilisez R, G ou B\n");
+        fprintf(stderr, "Composant invalide. Utilisez R, V ou B\n");
         free(data);
         return;
     }
 
-    /* Parcourir tous les pixels pour trouver la valeur maximale */
+ 
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -767,7 +767,7 @@ void max_component(char *filename, char component)
         }
     }
 
-    /* Afficher le résultat selon le format demandé */
+  
     printf("max_component %c (%d, %d): %d\n",
            (component >= 'a' && component <= 'z') ? component - 32 : component,
            max_x, max_y, max_value);
@@ -814,7 +814,6 @@ int rotate_acw(const char *input_filename, const char *output_filename)
         {
             input_idx = (y * width + x) * channels;
 
-            // Transformation pour rotation anti-horaire 90°
             new_x = y;
             new_y = width - 1 - x;
 
