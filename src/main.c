@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     max_pixel(configuration.filenames[0]);
   }
 
-  else if (strncmp(configuration.command, "min_pixel", 3) == 0)
+  else if (strncmp(configuration.command, "min_pixel", 6) == 0)
   {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     min_pixel(configuration.filenames[0]);
@@ -117,7 +117,6 @@ int main(int argc, char **argv)
 
   else if (strcmp(configuration.command, "scale_bilinear") == 0)
   {
-    
 
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     double scale = atof(configuration.arguments[0]);
@@ -132,8 +131,6 @@ int main(int argc, char **argv)
     rotate_cw(configuration.filenames[0], "image_out.bmp");
   }
 
-  
-
   else if (strcmp(configuration.command, "scale_crop") == 0)
   {
     int center_x = atoi(configuration.arguments[0]);
@@ -143,5 +140,10 @@ int main(int argc, char **argv)
 
     scale_crop(configuration.filenames[0], "image_out.bmp", center_x, center_y, crop_width, crop_height);
   }
-}
 
+  else if (strncmp(configuration.command, "min_component", 13) == 0)
+  {
+    char component = configuration.arguments[0][0];
+    min_component(configuration.filenames[0], component);
+  }
+}
