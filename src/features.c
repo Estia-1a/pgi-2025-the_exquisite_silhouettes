@@ -610,7 +610,7 @@ int scale_crop(const char *input_file, const char *output_file, int center_x, in
         for (int x = 0; x < crop_width; x++)
         {
             int src_x = x_start + x;
-            int src_y = y_start + y;
+            int src_y = (y_start + y);
 
             for (int c = 0; c < channel_count; c++)
             {
@@ -620,7 +620,7 @@ int scale_crop(const char *input_file, const char *output_file, int center_x, in
                 }
                 else
                 {
-                    data_out[(y * crop_width + x) * channel_count + c] = 0; // noir si hors image
+                    data_out[(y * crop_width + x) * channel_count + c] = 0;
                 }
             }
         }

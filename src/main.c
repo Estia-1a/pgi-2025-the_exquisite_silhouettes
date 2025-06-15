@@ -117,7 +117,6 @@ int main(int argc, char **argv)
 
   else if (strcmp(configuration.command, "scale_bilinear") == 0)
   {
-    
 
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     double scale = atof(configuration.arguments[0]);
@@ -132,8 +131,6 @@ int main(int argc, char **argv)
     rotate_cw(configuration.filenames[0], "image_out.bmp");
   }
 
-  
-
   else if (strcmp(configuration.command, "scale_crop") == 0)
   {
     int center_x = atoi(configuration.arguments[0]);
@@ -144,4 +141,3 @@ int main(int argc, char **argv)
     scale_crop(configuration.filenames[0], "image_out.bmp", center_x, center_y, crop_width, crop_height);
   }
 }
-
