@@ -41,4 +41,6 @@ void min_component(char *filename, char component);
 
 void max_component(char *filename, char component);
 
+int rotate_acw(const char *input_filename, const char *output_filename);
+
 #endif

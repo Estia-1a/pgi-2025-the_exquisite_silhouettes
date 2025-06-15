@@ -774,3 +774,76 @@ void max_component(char *filename, char component)
 
     free(data);
 }
+
+int rotate_acw(const char *input_filename, const char *output_filename)
+{
+    unsigned char *input_data = NULL;
+    unsigned char *output_data = NULL;
+    int width, height, channels;
+    int new_width, new_height;
+    int x, y, input_idx, output_idx;
+    int new_x, new_y;
+
+    if (!read_image_data(input_filename, &input_data, &width, &height, &channels))
+    {
+        fprintf(stderr, "Erreur : Impossible de lire l'image %s\n", input_filename);
+        return 0;
+    }
+
+    if (channels < 3)
+    {
+        fprintf(stderr, "Erreur : L'image doit avoir au moins 3 canaux\n");
+        free(input_data);
+        return 0;
+    }
+
+    new_width = height;
+    new_height = width;
+
+    output_data = (unsigned char *)malloc(new_width * new_height * channels);
+    if (output_data == NULL)
+    {
+        fprintf(stderr, "Erreur : Allocation mémoire échouée\n");
+        free(input_data);
+        return 0;
+    }
+
+    for (y = 0; y < height; y++)
+    {
+        for (x = 0; x < width; x++)
+        {
+            input_idx = (y * width + x) * channels;
+
+            // Transformation pour rotation anti-horaire 90°
+            new_x = y;
+            new_y = width - 1 - x;
+
+            output_idx = (new_y * new_width + new_x) * channels;
+
+            output_data[output_idx] = input_data[input_idx];
+            output_data[output_idx + 1] = input_data[input_idx + 1];
+            output_data[output_idx + 2] = input_data[input_idx + 2];
+
+            if (channels >= 4)
+            {
+                output_data[output_idx + 3] = input_data[input_idx + 3];
+            }
+        }
+    }
+
+    if (!write_image_data(output_filename, output_data, new_width, new_height))
+    {
+        fprintf(stderr, "Erreur : Impossible d'écrire l'image %s\n", output_filename);
+        free(input_data);
+        free(output_data);
+        return 0;
+    }
+
+    free(input_data);
+    free(output_data);
+
+    printf("Image tournée de 90° anti-horaire sauvegardée : %s (%dx%d -> %dx%d)\n",
+           output_filename, width, height, new_width, new_height);
+
+    return 1;
+}

@@ -167,4 +167,9 @@ int main(int argc, char **argv)
       fprintf(stderr, "Erreur : Composant manquant (R, G ou B)\n");
     }
   }
+
+  else if (strcmp(configuration.command, "rotate_acw") == 0)
+  {
+    rotate_acw(configuration.filenames[0], "image_out.bmp");
+  }
 }
