@@ -59,13 +59,13 @@ int main(int argc, char **argv)
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     print_pixel(configuration.filenames[0], 45, 500);
   }
-  else if (strncmp(configuration.command, "max_pixel", 3) == 0)
+  else if (strncmp(configuration.command, "max_pixel", 13) == 0)
   {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     max_pixel(configuration.filenames[0]);
   }
 
-  else if (strncmp(configuration.command, "min_pixel", 6) == 0)
+  else if (strncmp(configuration.command, "min_pixel", 13) == 0)
   {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     min_pixel(configuration.filenames[0]);
@@ -145,5 +145,26 @@ int main(int argc, char **argv)
   {
     char component = configuration.arguments[0][0];
     min_component(configuration.filenames[0], component);
+  }
+
+  else if (strncmp(configuration.command, "max_component", 13) == 0)
+  {
+    if (configuration.arguments[0] != NULL && strlen(configuration.arguments[0]) > 0)
+    {
+      char component = configuration.arguments[0][0];
+      if (component == 'R' || component == 'G' || component == 'B' ||
+          component == 'r' || component == 'g' || component == 'b')
+      {
+        max_component(configuration.filenames[0], component);
+      }
+      else
+      {
+        fprintf(stderr, "Erreur : Composant invalide. Utilisez R, G ou B\n");
+      }
+    }
+    else
+    {
+      fprintf(stderr, "Erreur : Composant manquant (R, G ou B)\n");
+    }
   }
 }

@@ -706,3 +706,71 @@ void min_component(char *filename, char component)
 
     free(data);
 }
+
+void max_component(char *filename, char component)
+{
+    unsigned char *data = NULL;
+    int width = 0, height = 0, n = 0;
+
+    if (!read_image_data(filename, &data, &width, &height, &n))
+    {
+        fprintf(stderr, "Impossible de lire l'image %s\n", filename);
+        return;
+    }
+
+    if (n < 3)
+    {
+        fprintf(stderr, "L'image doit avoir au moins 3 canaux (RGB)\n");
+        free(data);
+        return;
+    }
+
+    int max_value = -1;
+    int max_x = 0, max_y = 0;
+    int channel_offset;
+
+    /* Déterminer quel canal analyser */
+    switch (component)
+    {
+    case 'R':
+    case 'r':
+        channel_offset = 0;
+        break;
+    case 'G':
+    case 'g':
+        channel_offset = 1;
+        break;
+    case 'B':
+    case 'b':
+        channel_offset = 2;
+        break;
+    default:
+        fprintf(stderr, "Composant invalide. Utilisez R, G ou B\n");
+        free(data);
+        return;
+    }
+
+    /* Parcourir tous les pixels pour trouver la valeur maximale */
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            int pixel_index = (y * width + x) * n + channel_offset;
+            unsigned char current_value = data[pixel_index];
+
+            if ((int)current_value > max_value)
+            {
+                max_value = (int)current_value;
+                max_x = x;
+                max_y = y;
+            }
+        }
+    }
+
+    /* Afficher le résultat selon le format demandé */
+    printf("max_component %c (%d, %d): %d\n",
+           (component >= 'a' && component <= 'z') ? component - 32 : component,
+           max_x, max_y, max_value);
+
+    free(data);
+}

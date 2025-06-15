@@ -39,4 +39,6 @@ int scale_crop(const char *input_file, const char *output_file, int center_x, in
 
 void min_component(char *filename, char component);
 
+void max_component(char *filename, char component);
+
 #endif
