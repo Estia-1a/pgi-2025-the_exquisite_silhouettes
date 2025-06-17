@@ -152,8 +152,8 @@ int main(int argc, char **argv)
     if (configuration.arguments[0] != NULL && strlen(configuration.arguments[0]) > 0)
     {
       char component = configuration.arguments[0][0];
-      if (component == 'R' || component == 'V' || component == 'B' ||
-          component == 'r' || component == 'v' || component == 'b')
+      if (component == 'R' || component == 'G' || component == 'B' ||
+          component == 'r' || component == 'g' || component == 'b')
       {
         max_component(configuration.filenames[0], component);
       }

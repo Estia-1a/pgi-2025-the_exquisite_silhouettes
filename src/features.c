@@ -668,8 +668,8 @@ void min_component(char *filename, char component)
     case 'r':
         channel_offset = 0;
         break;
-    case 'V':
-    case 'v':
+    case 'G':
+    case 'g':
         channel_offset = 1;
         break;
     case 'B':
@@ -736,8 +736,8 @@ void max_component(char *filename, char component)
     case 'r':
         channel_offset = 0;
         break;
-    case 'V':
-    case 'v':
+    case 'G':
+    case 'g':
         channel_offset = 1;
         break;
     case 'B':
