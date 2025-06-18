@@ -384,7 +384,7 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
         data[i * 3 + 2] = gray;
     }
 
-    if (!write_image_data(fichier2, data, width, height))
+        if (!write_image_data(fichier2, data, width, height))
     {
         fprintf(stderr, "Erreur lors de l'écriture de l'image : %s\n", fichier2);
         free(data);
