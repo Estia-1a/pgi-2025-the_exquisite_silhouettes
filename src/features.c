@@ -387,7 +387,7 @@ int color_gray_luminance(const char *fichier1, const char *fichier2)
         data[i * 3 + 2] = gray;
     }
 
-        if (!write_image_data(fichier2, data, width, height))
+    if (!write_image_data(fichier2, data, width, height))
     {
         fprintf(stderr, "Erreur lors de l'écriture de l'image : %s\n", fichier2);
         free(data);
@@ -844,7 +844,6 @@ int rotate_acw(const char *input_filename, const char *output_filename)
     return 1;
 }
 
-// Dans features.c
 int mirror_horizontal(const char *input_filename, const char *output_filename)
 {
     unsigned char *input_data = NULL;
@@ -866,7 +865,6 @@ int mirror_horizontal(const char *input_filename, const char *output_filename)
         return 0;
     }
 
-    // Les dimensions restent les mêmes pour un miroir horizontal
     output_data = (unsigned char *)malloc(width * height * channels);
     if (output_data == NULL)
     {
@@ -881,8 +879,6 @@ int mirror_horizontal(const char *input_filename, const char *output_filename)
         {
             input_idx = (y * width + x) * channels;
 
-            // Transformation pour miroir horizontal
-            // Le pixel de gauche va à droite et vice versa
             mirrored_x = width - 1 - x;
 
             output_idx = (y * width + mirrored_x) * channels;
@@ -915,11 +911,13 @@ int mirror_horizontal(const char *input_filename, const char *output_filename)
     return 1;
 }
 
-void scale_nearest(const char* inputFilename, const char* outputFilename, double scale) {
+void scale_nearest(const char *inputFilename, const char *outputFilename, double scale)
+{
     unsigned char *data = NULL;
     int width, height, channel_count;
 
-    if (!read_image_data(inputFilename, &data, &width, &height, &channel_count)) {
+    if (!read_image_data(inputFilename, &data, &width, &height, &channel_count))
+    {
         fprintf(stderr, "Erreur : Impossible de lire l'image %s\n", inputFilename);
         return;
     }
@@ -927,34 +925,35 @@ void scale_nearest(const char* inputFilename, const char* outputFilename, double
     int new_width = (int)(width * scale);
     int new_height = (int)(height * scale);
 
-    // Vérification que les dimensions sont dans les limites
-    if (new_width > MAX_WIDTH || new_height > MAX_HEIGHT) {
+    if (new_width > MAX_WIDTH || new_height > MAX_HEIGHT)
+    {
         fprintf(stderr, "Erreur : image redimensionnée trop grande (max %dx%d)\n", MAX_WIDTH, MAX_HEIGHT);
         free(data);
         return;
     }
 
-    // Tableau statique pour stocker l'image redimensionnée
-    unsigned char* new_data = malloc(new_width * new_height * channel_count); 
+    unsigned char *new_data = malloc(new_width * new_height * channel_count);
     if (!new_data)
     {
         printf("Erreur d'allocation mémoire.\n");
         free(data);
-        return ;
+        return;
     }
 
-    for (int y = 0; y < new_height; y++) {
-        for (int x = 0; x < new_width; x++) {
+    for (int y = 0; y < new_height; y++)
+    {
+        for (int x = 0; x < new_width; x++)
+        {
             int src_x = (int)(x / scale);
             int src_y = (int)(y / scale);
 
+            if (src_x >= width)
+                src_x = width - 1;
+            if (src_y >= height)
+                src_y = height - 1;
 
-
-
-            if (src_x >= width) src_x = width - 1;
-            if (src_y >= height) src_y = height - 1;
-
-            for (int c = 0; c < channel_count; c++) {
+            for (int c = 0; c < channel_count; c++)
+            {
                 new_data[(y * new_width + x) * channel_count + c] =
                     data[(src_y * width + src_x) * channel_count + c];
             }
@@ -964,4 +963,3 @@ void scale_nearest(const char* inputFilename, const char* outputFilename, double
     write_image_data(outputFilename, new_data, new_width, new_height);
     free(data);
 }
-
