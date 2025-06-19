@@ -177,4 +177,20 @@ int main(int argc, char **argv)
   {
     mirror_horizontal(configuration.filenames[0], "image_out.bmp");
   }
+
+  else if (strcmp(configuration.command, "scale_nearest") == 0)
+  {
+    // Récupérer X depuis la ligne de commande
+    double scale_factor = atof(argv[5]);
+    
+    // Validation : entre 0.5 et 5 inclus
+    if (scale_factor < 0.5 || scale_factor > 5.0) {
+        fprintf(stderr, "Erreur : le facteur d'échelle doit être entre 0.5 et 5.0\n");
+        return 1;
+    }
+    
+    scale_nearest(configuration.filenames[0], "image_out.bmp", scale_factor);
+  }
+
+
 }

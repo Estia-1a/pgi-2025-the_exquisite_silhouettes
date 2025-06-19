@@ -16,4 +16,13 @@ typedef struct _pixelRGB
 } pixelRGB;
 pixelRGB *get_pixel(unsigned char *data, const unsigned int width, const unsigned int height, const unsigned int n, const unsigned int x, const unsigned int y);
 
+
+typedef struct _imageConfig
+{
+    double scale_factor;
+    int width;
+    int height;
+    int channels;
+} imageConfig;
+
 #endif
