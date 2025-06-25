@@ -54,6 +54,7 @@ void first_pixel(char *fichier)
 
             printf("first_pixel: %d, %d, %d", r, g, b);
         }
+        free(data);
     }
     else
     {
