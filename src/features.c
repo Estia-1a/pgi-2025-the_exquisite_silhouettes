@@ -82,16 +82,14 @@ void tenth_pixel(char *fichier)
 
             printf("tenth_pixel: %d, %d, %d", r, g, b);
         }
+        free(data);
     }
     else
     {
         fprintf(stderr, "je ne peux pas lire ton image %s", fichier);
     }
 
-    if (data != NULL)
-    {
-        free(data);
-    }
+
 }
 
 void second_line(char *filename, int x, int y)
